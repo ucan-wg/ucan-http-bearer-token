@@ -1,4 +1,4 @@
-# UCAN Over HTTP Headers Specification v0.9.0
+# UCAN Over HTTP Headers Specification v0.1.0
 
 ## Editors
 
