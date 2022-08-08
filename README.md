@@ -32,10 +32,10 @@ The entry-point for a UCAN chain MUST be `authorization: bearer <ucan>`. This is
 
 ## 2.2 UCAN header Table
 
-Each row of a UCAN header table MUST use the key `ucan`, followed by the CID, a space (separator), and then the unpadded base64url UCAN segment.
+Each row of a UCAN header table MUST use the key `ucan`, followed by the CID, a space (separator), and then the JWT-encoded UCAN.
 
 ``` abnf
-ucan-header = "ucan: " <cid> " " <ucan-base64url-unpadded>
+ucan-header = "ucan: " <cid> " " <ucan-jwt>
 ```
 
 ``` javascript
