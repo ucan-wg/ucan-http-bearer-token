@@ -15,14 +15,24 @@
 
 ## Language
 
-
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119).
 
 # 1. Introduction
 
 ## 1.1 Motivation
 
+
+## Collection Format
+
+A UCAN collection transmitted as HTTP headers MUST be formatted as follows:
+
+Header key: UCAN [yes, we're using duplicates]
+Header value: {CID}: {base64url encoded UCAN}
+
 # XX. Acknowledgments
 
-
 # XX. FAQ
+
+## XX.1 Should the headers have an `X-` prefix?
+
+The `X-` prefix was deprecated in [RFC 6648](https://datatracker.ietf.org/doc/html/rfc6648)
