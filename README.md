@@ -1,4 +1,4 @@
-# UCAN HTTP Header Specification v0.1.0
+# UCAN as Bearer Token Specification v0.1.0
 
 ## Editors
 
