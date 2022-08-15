@@ -109,13 +109,13 @@ If the UCAN provided can be checked, but is found to be expired, revoked, malfor
 
 If the UCAN is does not include sufficient authority to perform the requestor's action, the recipient MUST respond with an `HTTP 403 Forbidden`. This case MAY be encountered without the entire chain present, even the outermost UCAN layer could claim insufficient authority.
 
-### 3.3.3 Missing Dependencies
+### 3.3.3 Missing Proofs
 
-In the case where the recipient is missing some further proof or proofs in a UCAN chain, it MUST respond with an [`HTTP 510 Not Extended`](https://datatracker.ietf.org/doc/html/rfc2774#section-7). The [`ucan-cache-expiry` header](#32-cache-and-expiry) MUST be set. The UCANs that were received that generated this response MUST be considered cached until the `max-age` TTL expires.
+In the case where the recipient is missing some further proof or proofs in a UCAN chain, it MUST respond with an [`HTTP 510 Not Extended`](https://datatracker.ietf.org/doc/html/rfc2774#section-7). The [`ucan-cache-expiry` header](#32-cache-and-expiry) MUST be set. The UCANs that generated this response MUST be considered cached until either the cache expires or they are explicitly requested in a further "missing proof" response.
 
 The body of the response MUST include a JSON object with a `prf` field. The value of this field MUST be an array of the required UCAN CIDs.
 
-#### 3.3.3.1 Example
+#### 3.3.3.1 Response Body Example
 
 ``` javascript
 { "prf": ["QmXiZ3sFXw811R8TrwaNeYvCF9Pv1nEmVpeEMEVpApzVhC", "bafkreidrgwjljxy6s7o5uvrifxnweffgi7chmye3pn6wyisv2n4b3uordi"] }
