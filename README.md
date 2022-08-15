@@ -126,9 +126,3 @@ The body of the response MUST include a JSON object with a `prf` field. The valu
 Many thanks to the authors of [RFC 6750](https://www.rfc-editor.org/rfc/rfc6750.html) — Michael B. Jones and Dick Hardt — for their work in defining the bearer authorization method.
 
 Thank you to [Chris Joel](https://github.com/cdata) of [Subconcious](https://subconscious.substack.com/), and the [Bluesky](https://blueskyweb.xyz) and [Fission](https://fission.codes) teams for pioneering this format.
-
-# 5. FAQ
-
-## 5.1 Should the headers have an `X-` prefix?
-
-The `X-` prefix was deprecated in [RFC 6648](https://datatracker.ietf.org/doc/html/rfc6648)
