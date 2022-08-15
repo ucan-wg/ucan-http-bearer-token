@@ -1,57 +1,9 @@
-# Names
+Holmgren
+Pre-Draft
+TTL
+UCAN
+UCANs
 Zelenka
+dholms
 expede
-matheus23
-Philipp
-Krüger
-Nyberg
-
-# Spec
-WNFS
-CRDT like ABC
-merklization
-webnative
-v0
-HAMT like ABC
-namefilter like noun
-merkle
-ethereum
-MMPT like ABC
-trie
-IPLD like ABC
-encoding like noun
-bitswap
-zkSNARK like ABC
-zkSTARK like ABC
-GCA like ABC
-cardinality like formality
-RSA like ABC
-NPM like ABC
-XXHash3
-popcount like noun
-tunable like reachable
-cryptographic
-PDF
-pdf
-SHA3
-ciphertext like noun
-decrypt like encrypt
-CID like ABC
-DAG-CBOR-native
-multicodec like noun
-DAG-CBOR-encoded
-DAG-CBOR
-dag-cbor
-lookup like noun
-inline like outline
-IPFS like ABC
-symlink like noun
-AES-256
-CBOR like ABC
-distinguishability
-bitarray like noun
-benchmarking
-golang
-
-# other
--
+trustless
