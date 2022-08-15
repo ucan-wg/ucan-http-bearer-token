@@ -83,13 +83,13 @@ ucan-header = "ucan:" 1*SP <cid> 1*SP <ucan-jwt>
 ]
 ```
 
-# X Response
+# 3 Response
 
-## X.1 Success
+## 3.1 Success
 
 The general success case is left unspecified. The success status code MUST be set by the application, based on its internal semantics.
 
-## X.2. Cache TTL
+## 3.2 Cache and Expiry
 
 The responder MAY include a signal that it has cached the UCANs from the request via a TTL header. The header MUST have the field `ucan-cache-expiry` and value set to the expiry in [Unix time](https://en.wikipedia.org/wiki/Unix_time).
 
@@ -97,36 +97,38 @@ The responder MAY include a signal that it has cached the UCANs from the request
 ucan-ttl-header = "ucan-cache-expiry:" 1*SP <utc-timestamp>
 ```
 
-## C Errors
+## 3.3 Errors
 
 The errors are intended to remain as compatible with [RFC6750](https://www.rfc-editor.org/rfc/rfc6750.html#section-3.1) as possible.
 
-## C.1 Complete-but-Invalid UCAN
+### 3.3.1 Complete-but-Invalid UCAN
 
 If the UCAN provided can be checked, but is found to be expired, revoked, malformed, or otherwise invalid, the recipient MUST respond with an `HTTP 401 Unauthorized`. This case MAY be encountered even without the entire UCAN chain present, such as when no valid proof is listen in the proof chain.
 
-## C.2 Insufficient Capability Scope
+### 3.3.2 Insufficient Capability Scope
 
 If the UCAN is does not include sufficient authority to perform the requestor's action, the recipient MUST respond with an `HTTP 403 Forbidden`. This case MAY be encountered without the entire chain present, even the outermost UCAN layer could claim insufficient authorty.
 
-## C.3 Missing Dependencies
+### 3.3.3 Missing Dependencies
 
-In the case where the recipient is missing some further proof or proofs in a UCAN chain, it MUST respond with an [`HTTP 510 Not Extended`](https://datatracker.ietf.org/doc/html/rfc2774#section-7). The `Cache-Control: max-age=<seconds>` header MUST be set. The UCANs that were received that generated this response MUST be considered cached until the `max-age` TTL expires.
+In the case where the recipient is missing some further proof or proofs in a UCAN chain, it MUST respond with an [`HTTP 510 Not Extended`](https://datatracker.ietf.org/doc/html/rfc2774#section-7). The [`ucan-cache-expiry` header](#32-cache-and-expiry) MUST be set. The UCANs that were received that generated this response MUST be considered cached until the `max-age` TTL expires.
 
 The body of the response MUST include a JSON object with a `prf` field. The value of this field MUST be an array of the required UCAN CIDs.
+
+#### 3.3.3.1 Example
 
 ``` javascript
 { "prf": ["QmXiZ3sFXw811R8TrwaNeYvCF9Pv1nEmVpeEMEVpApzVhC", "bafkreidrgwjljxy6s7o5uvrifxnweffgi7chmye3pn6wyisv2n4b3uordi"] }
 ```
 
-# XX. Acknowledgments
+# 4. Acknowledgments
 
 Many thanks to the authors of [RFC 6750](https://www.rfc-editor.org/rfc/rfc6750.html) — Michael B. Jones and Dick Hardt — for their work in defining the bearer authorization method.
 
 Thank you to [Chris Joel](https://github.com/cdata) of [Subconcious](https://subconscious.substack.com/), and the [Bluesky](https://blueskyweb.xyz) and [Fission](https://fission.codes) teams for pioneering this format.
 
-# XX. FAQ
+# 5. FAQ
 
-## XX.1 Should the headers have an `X-` prefix?
+## 5.1 Should the headers have an `X-` prefix?
 
 The `X-` prefix was deprecated in [RFC 6648](https://datatracker.ietf.org/doc/html/rfc6648)
