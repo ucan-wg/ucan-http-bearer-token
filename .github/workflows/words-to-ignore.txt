@@ -1,4 +1,5 @@
 CIDs
+Hardt
 Holmgren
 JSON
 JWT
@@ -9,10 +10,20 @@ UCAN
 UCAN's
 UCANs
 Zelenka
+auth
 backend
 dholms
 expede
+interpretable
 multiformat
 requestor's
+responder
+signalling
 trustless
 v0
+validator
+
+# wut
+HeaderTypeDescriptionRequiredCardinalityEntrypoint
+UCANNoZero
+UCANYesOneMapping

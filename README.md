@@ -23,14 +23,14 @@ The UCAN spec itself is transport agnostic. This specification describes how to 
 
 ## 1.1 Cache Advantages
 
-The content addressing in the UCAN proofs (`prf`) field enforces immutibility of their content. This makes it possible to: 
+The content addressing in the UCAN proofs (`prf`) field enforces immutability of their content. This makes it possible to: 
 
 1. Break up the serialization of collections of UCAN chains
 2. Deduplicate UCAN proofs across requests
 
 In avoiding transferring the token with all dependencies with every request, the sender gains bandwidth efficiency while still being able to validate UCAN proofs that it has received before (either directly or via gossip with other providers). 
 
-This nessesitates additional steps in the protocol to handle requesting further UCAN proofs, and signalling that the UCANs in a request have been cached.
+This necessitates additional steps in the protocol to handle requesting further UCAN proofs, and signalling that the UCANs in a request have been cached.
 
 ## 1.2 Bearer Tokens
 
@@ -42,22 +42,22 @@ A desirable feature of UCAN is that it is interpretable by systems that understa
 
 The HTTP headers MUST include an `Authorization: Bearer` header, and MAY include zero or more `ucan` fields that form a CID-to-UCAN table.
 
-| Header                  | Type               | Description                 | Required | Cardinality  |
-| ----------------------- | ------------------ | --------------------------- | -------- | ------------ |
-| `Authorization: Bearer` | `<ucan_jwt>`       | Entrypoint "top-level" UCAN | Yes      | One          |
-| `ucan`                  | `<cid> <ucan-jwt>` | Mapping of CID to UCAN      | No       | Zero or more |
+| Header                  | Type               | Description                  | Required | Cardinality  |
+| ----------------------- | ------------------ | ---------------------------- | -------- | ------------ |
+| `Authorization: Bearer` | `<ucan_jwt>`       | Entry point "top-level" UCAN | Yes      | One          |
+| `ucan`                  | `<cid> <ucan-jwt>` | Mapping of CID to UCAN       | No       | Zero or more |
 
 ## 2.1 Entry Point
 
 The entry-point for a UCAN chain MUST be `Authorization: Bearer <ucan>`. This is the only REQUIRED field. The UCAN contained in this field MUST be [encoded as a JWT](https://www.rfc-editor.org/rfc/rfc7519#section-3). Per the UCAN spec, this token SHOULD be unique per request.
 
 ``` abnf
-ucan-entrypoint = "Authorization:" 1*SP "Bearer" 1*SP <ucan-jwt>
+ucan-entry-point = "Authorization:" 1*SP "Bearer" 1*SP <ucan-jwt>
 ```
 
 ## 2.2 UCAN-by-CID Table
 
-The entrypoint UCAN MAY contain CID references to further UCANs as "proofs" (values in the `prf` field). For the entrypoint UCAN to be valid, these MUST also be valid and available.
+The entry point UCAN MAY contain CID references to further UCANs as "proofs" (values in the `prf` field). For the entrypoint UCAN to be valid, these MUST also be valid and available.
 
 Since UCANs MAY be cached in previous requests, including UCANs in this table is OPTIONAL. There MAY be zero or more UCAN CID headers. Together, these form a UCAN-by-CID table.
 
@@ -107,7 +107,7 @@ If the UCAN provided can be checked, but is found to be expired, revoked, malfor
 
 ### 3.3.2 Insufficient Capability Scope
 
-If the UCAN is does not include sufficient authority to perform the requestor's action, the recipient MUST respond with an `HTTP 403 Forbidden`. This case MAY be encountered without the entire chain present, even the outermost UCAN layer could claim insufficient authorty.
+If the UCAN is does not include sufficient authority to perform the requestor's action, the recipient MUST respond with an `HTTP 403 Forbidden`. This case MAY be encountered without the entire chain present, even the outermost UCAN layer could claim insufficient authority.
 
 ### 3.3.3 Missing Dependencies
 
