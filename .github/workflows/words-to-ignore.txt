@@ -27,3 +27,4 @@ validator
 HeaderTypeDescriptionRequiredCardinalityEntrypoint
 UCANNoZero
 UCANYesOneMapping
+HeaderTypeDescriptionRequiredCardinalityEntry
