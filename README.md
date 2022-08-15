@@ -57,7 +57,7 @@ ucan-entry-point = "Authorization:" 1*SP "Bearer" 1*SP <ucan-jwt>
 
 ## 2.2 UCAN-by-CID Table
 
-The entry point UCAN MAY contain CID references to further UCANs as "proofs" (values in the `prf` field). For the entrypoint UCAN to be valid, these MUST also be valid and available.
+The entry point UCAN MAY contain CID references to further UCANs as "proofs" (values in the `prf` field). For the entry point UCAN to be valid, these MUST also be valid and available.
 
 Since UCANs MAY be cached in previous requests, including UCANs in this table is OPTIONAL. There MAY be zero or more UCAN CID headers. Together, these form a UCAN-by-CID table.
 
