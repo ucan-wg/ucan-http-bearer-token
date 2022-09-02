@@ -1,4 +1,4 @@
-# UCAN as Bearer Token Specification v0.1.0
+# UCAN as Bearer Token Specification v0.2.0
 
 ## Editors
 
@@ -8,6 +8,7 @@
 
 * [Brooklyn Zelenka](https://github.com/expede), [Fission](https://fission.codes)
 * [Daniel Holmgren](https://github.com/dholms), [Bluesky](https://blueskyweb.xyz/)
+* [Hugo Dias](https://github.com/hugomrdias), DAG House
 
 # 0. Abstract
 
