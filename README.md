@@ -62,7 +62,7 @@ The entry point UCAN MAY contain CID references to further UCANs as "proofs" (va
 
 ``` abnf
 ucan-header = "ucan:" 1*SP <ucan-assoc-list>
-ucan-assoc-list = <entry> *("," 1*SP <ucan-entry>) 
+ucan-assoc-list = <entry> *("," *SP <ucan-entry>) 
 ucan-entry = <cid> ":" <ucan-jwt>
 ```
 
