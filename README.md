@@ -48,8 +48,6 @@ The HTTP headers MUST include an `Authorization: Bearer` header, and MAY include
 | `Authorization: Bearer` | `ucan-jwt`       | Entry point "top-level" UCAN | Yes      |
 | `ucan`                  | `[cid:ucan-jwt]` | Mapping of CIDs to UCANs     | No       |
 
-FIXME should we not include the CID, and force the verfier to hash them?
-
 ## 2.1 Entry Point
 
 The entry-point for a UCAN chain MUST be `Authorization: Bearer <ucan>`. This is the only REQUIRED field. The UCAN contained in this field MUST be [encoded as a JWT](https://www.rfc-editor.org/rfc/rfc7519#section-3). Per the UCAN spec, this token SHOULD be unique per request.
