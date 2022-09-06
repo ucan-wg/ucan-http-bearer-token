@@ -1,4 +1,6 @@
 CIDs
+Bluesky
+Deduplicate
 Hardt
 Holmgren
 JSON
@@ -22,9 +24,3 @@ signalling
 trustless
 v0
 validator
-
-# wut
-HeaderTypeDescriptionRequiredCardinalityEntrypoint
-UCANNoZero
-UCANYesOneMapping
-HeaderTypeDescriptionRequiredCardinalityEntry
