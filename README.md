@@ -43,10 +43,12 @@ A desirable feature of UCAN is that it is interpretable by systems that understa
 
 The HTTP headers MUST include an `Authorization: Bearer` header, and MAY include zero or more `ucan` fields that form a CID-to-UCAN table.
 
-| Header                  | Type               | Description                  | Required | Cardinality  |
-| ----------------------- | ------------------ | ---------------------------- | -------- | ------------ |
-| `Authorization: Bearer` | `<ucan_jwt>`       | Entry point "top-level" UCAN | Yes      | One          |
-| `ucan`                  | `<cid> <ucan-jwt>` | Mapping of CID to UCAN       | No       | Zero or more |
+| Header                  | Type             | Description                  | Required |
+| ----------------------- | ---------------- | ---------------------------- | -------- |
+| `Authorization: Bearer` | `ucan-jwt`       | Entry point "top-level" UCAN | Yes      |
+| `ucan`                  | `[cid:ucan-jwt]` | Mapping of CIDs to UCANs     | No       |
+
+FIXME should we not include the CID, and force the verfier to hash them?
 
 ## 2.1 Entry Point
 
@@ -58,29 +60,24 @@ ucan-entry-point = "Authorization:" 1*SP "Bearer" 1*SP <ucan-jwt>
 
 ## 2.2 UCAN-by-CID Table
 
-The entry point UCAN MAY contain CID references to further UCANs as "proofs" (values in the `prf` field). For the entry point UCAN to be valid, these MUST also be valid and available.
-
-Since UCANs MAY be cached in previous requests, including UCANs in this table is OPTIONAL. There MAY be zero or more UCAN CID headers. Together, these form a UCAN-by-CID table.
-
-### 2.2.1 Row
-
-Each row of the UCAN CID MUST use the header field `ucan`, followed by the CID, a space (separator), and finally a JWT-encoded UCAN.
-
-The `cid` portion of each `ucan` header MUST be the CID for the following JWT. The CID MUST be given in the same format as provided in one of the other UCAN's proof `prf` field.
-
-Regardless the encoding type specified in by the CID multiformat, the JWT itself MUST be provided as a JWT. Hash validation of UCANs by the recipient is RECOMMENDED. Any non-raw CIDs MUST be deterministically encoded, and thus are able to be encoded as a JWT (per the UCAN spec). A validator is REQUIRED to re-encode the JWT UCAN in the target CID multiformat when validating its hash.
+The entry point UCAN MAY contain CID references to further UCANs as "proofs" (values in the `prf` field). For the entry point UCAN to be valid, these MUST also be valid and available. Since UCANs MAY be cached in previous requests, including UCAN mappings in this table is OPTIONAL. Only one `ucan` header SHOULD be used. If more than one `ucan` header is present, merging the elements from all headers on read is RECOMMENDED.
 
 ``` abnf
-ucan-header = "ucan:" 1*SP <cid> 1*SP <ucan-jwt>
+ucan-header = "ucan:" 1*SP <ucan-assoc-list>
+ucan-assoc-list = <entry> *("," 1*SP <ucan-entry>) 
+ucan-entry = <cid> ":" <ucan-jwt>
 ```
+
+Each entry in the UCAN-by-CID table MUST be presented as a tuple associating a CID with a JWT. This is called an "entry". A comma-separated list of one or more entries is called an "association list". The `cid` portion of each entry MUST be the CID for the following JWT. The CID MUST be given in the same format as provided in one of the other UCAN's proof `prf` field.
+
+Regardless the encoding type specified in by the CID multiformat, the JWT itself MUST be provided as a JWT. Hash validation of UCANs by the recipient is RECOMMENDED. Any non-raw CIDs MUST be deterministically encoded, and thus are able to be encoded as a JWT (per the UCAN spec). A validator is REQUIRED to re-encode the JWT UCAN in the target CID multiformat when validating its hash.
 
 ## 2.3 Example
 
 ``` javascript
 [
   {"Authorization": "Bearer eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuOC4xIn0.eyJhdWQiOiJkaWQ6a2V5Ono2TWtyNWFlZmluMUR6akc3TUJKM25zRkNzbnZIS0V2VGIyQzRZQUp3Ynh0MWpGUyIsImF0dCI6W3sid2l0aCI6eyJzY2hlbWUiOiJ3bmZzIiwiaGllclBhcnQiOiIvL2RlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyJ9LCJjYW4iOnsibmFtZXNwYWNlIjoid25mcyIsInNlZ21lbnRzIjpbIk9WRVJXUklURSJdfX1dLCJleHAiOjkyNTY5Mzk1MDUsImlzcyI6ImRpZDprZXk6ejZNa2tXb3E2UzN0cVJXcWtSbnlNZFhmcnM1NDlFZnU2cUN1NHVqRGZNY2pGUEpSIiwicHJmIjpbXX0.SjKaHG_2Ce0pjuNF5OD-b6joN1SIJMpjKjjl4JE61_upOrtvKoDQSxZ7WeYVAIATDl8EmcOKj9OqOSw0Vg8VCA"},
-  {"ucan": "QmXiZ3sFXw811R8TrwaNeYvCF9Pv1nEmVpeEMEVpApzVhC eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuOC4xIn0.eyJpc3MiOiJkaWQ6a2V5Ono2TWtoS0paOVdvV1dnZVdqSnd3QU14VDh4c2tMelJzbURYSzZ1NktuVjlnR0pCViIsImF1ZCI6ImRpZDprZXk6ejZNa2ZndFhrQ25iOUxYbjhCbnlqeFJNbkt0RmdaYzc0TTY4NzN2NjFxQ2NLSGprIiwibmJmIjo0ODA0MTQzNDEyLCJleHAiOjU0MzUyOTU0MTIsImF0dCI6W10sInByZiI6W119.u21cahr9wE_-KV_WHZmDRUlUGsMomc8jiDNwLYa-ETyJwCh8VtfPRSDwxNC3g2sv0hmqE9_467idq_T4wnLdBA"},
-  {"ucan": "bafkreidrgwjljxy6s7o5uvrifxnweffgi7chmye3pn6wyisv2n4b3uordi eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuOC4xIn0.eyJpc3MiOiJkaWQ6a2V5Ono2TWtxbmJOaTl2ZHRENERLUWhySDJZR1d0Qmd3QjNuNDEyQVFUOExnUjdBNjdFRyIsImF1ZCI6ImRpZDprZXk6ejZNa2ZndFhrQ25iOUxYbjhCbnlqeFJNbkt0RmdaYzc0TTY4NzN2NjFxQ2NLSGprIiwiZXhwIjo0ODA0MTQzNDEyLCJhdHQiOltdLCJwcmYiOltdfQ.MAntHVdUqeW97v4EPrSJjZ0P9GcLLFhFIdEYEHAdmv4x2CDfntUaqDzAgMCxwKCNBCAXBFvy1AT15ZFHs022AQ"}
+  {"ucan": "QmXiZ3sFXw811R8TrwaNeYvCF9Pv1nEmVpeEMEVpApzVhC:eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuOC4xIn0.eyJpc3MiOiJkaWQ6a2V5Ono2TWtoS0paOVdvV1dnZVdqSnd3QU14VDh4c2tMelJzbURYSzZ1NktuVjlnR0pCViIsImF1ZCI6ImRpZDprZXk6ejZNa2ZndFhrQ25iOUxYbjhCbnlqeFJNbkt0RmdaYzc0TTY4NzN2NjFxQ2NLSGprIiwibmJmIjo0ODA0MTQzNDEyLCJleHAiOjU0MzUyOTU0MTIsImF0dCI6W10sInByZiI6W119.u21cahr9wE_-KV_WHZmDRUlUGsMomc8jiDNwLYa-ETyJwCh8VtfPRSDwxNC3g2sv0hmqE9_467idq_T4wnLdBA", "bafkreidrgwjljxy6s7o5uvrifxnweffgi7chmye3pn6wyisv2n4b3uordi:eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuOC4xIn0.eyJpc3MiOiJkaWQ6a2V5Ono2TWtxbmJOaTl2ZHRENERLUWhySDJZR1d0Qmd3QjNuNDEyQVFUOExnUjdBNjdFRyIsImF1ZCI6ImRpZDprZXk6ejZNa2ZndFhrQ25iOUxYbjhCbnlqeFJNbkt0RmdaYzc0TTY4NzN2NjFxQ2NLSGprIiwiZXhwIjo0ODA0MTQzNDEyLCJhdHQiOltdLCJwcmYiOltdfQ.MAntHVdUqeW97v4EPrSJjZ0P9GcLLFhFIdEYEHAdmv4x2CDfntUaqDzAgMCxwKCNBCAXBFvy1AT15ZFHs022AQ"}
 ]
 ```
 
