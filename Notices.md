@@ -30,6 +30,14 @@ Specification version: 0.1.0 or later
 
 ---------------------------------------------------------------------------------
 
+Licensee’s name: Hugo Dias
+
+Authorized individual and system identifier: hugomrdias
+
+Specification version: 0.1.0 or later
+
+---------------------------------------------------------------------------------
+
 ## Withdrawals
 
 Name of party withdrawing:
