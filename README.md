@@ -107,7 +107,7 @@ If the UCAN provided can be checked, but is found to be expired, revoked, malfor
 
 ### 3.3.2 Insufficient Capability Scope
 
-If the UCAN is does not include sufficient authority to perform the requestor's action, the recipient MUST respond with an `HTTP 403 Forbidden`. This case MAY be encountered without the entire chain present, even the outermost UCAN layer could claim insufficient authority.
+If the UCAN does not include sufficient authority to perform the requestor's action, the recipient MUST respond with an `HTTP 403 Forbidden`. This case MAY be encountered without the entire chain present, even the outermost UCAN layer could claim insufficient authority.
 
 ### 3.3.3 Missing Proofs
 
