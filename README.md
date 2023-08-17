@@ -68,7 +68,7 @@ ucan-list = <ucan-jwt> *("," *SP <ucan-jwt>)
 
 Note that this field MUST be comma separated, but MUST NOT be enclosed in brackets.
 
-Each entry in the UCAN proof array MUST be presented as one or more JWT-formatted UCANs separated by commas. To recover the CID of each entry, the [canonical CID] format SHOULD be tried by default. If a UCAN lists a different CID format for a proof, then the elements array MUST be rehashed with the relevant CID configuation.
+Each entry in the UCAN proof array MUST be presented as one or more JWT-formatted UCANs separated by commas. To recover the CID of each entry, the [canonical CID] format SHOULD be tried by default. If a UCAN lists a different CID format for a proof, then the elements array MUST be rehashed with the relevant CID configuration.
 
 ## 2.3 Example
 
