@@ -1,14 +1,15 @@
-# UCAN as Bearer Token Specification v0.2.0
+# UCAN as Bearer Token Specification v0.3.0
 
 ## Editors
 
-* [Brooklyn Zelenka](https://github.com/expede), [Fission](https://fission.codes)
+* [Brooklyn Zelenka], [Fission]
 
 ## Authors
 
-* [Brooklyn Zelenka](https://github.com/expede), [Fission](https://fission.codes)
-* [Daniel Holmgren](https://github.com/dholms), [Bluesky](https://blueskyweb.xyz/)
-* [Hugo Dias](https://github.com/hugomrdias), DAG House
+* [Brooklyn Zelenka], [Fission]
+* [Daniel Holmgren], [Bluesky]
+* [Hugo Dias], [DAG House]
+* [Quinn Wilton], [Fission]
 
 # 0. Abstract
 
@@ -43,10 +44,10 @@ A desirable feature of UCAN is that it is interpretable by systems that understa
 
 The HTTP headers MUST include an `Authorization: Bearer` header, and MAY include zero or more `ucan` fields that form a CID-to-UCAN table.
 
-| Header                  | Type             | Description                  | Required |
-| ----------------------- | ---------------- | ---------------------------- | -------- |
-| `Authorization: Bearer` | `ucan-jwt`       | Entry point "top-level" UCAN | Yes      |
-| `ucan`                  | `[cid:ucan-jwt]` | Mapping of CIDs to UCANs     | No       |
+| Header                  | Type                    | Description                  | Required |
+| ----------------------- | ----------------------- | ---------------------------- | -------- |
+| `Authorization: Bearer` | `ucan-jwt`              | Entry point "top-level" UCAN | Yes      |
+| `ucan`                  | `[cid-header:ucan-jwt]` | Mapping of CIDs to UCANs     | No       |
 
 ## 2.1 Entry Point
 
@@ -63,7 +64,7 @@ The entry point UCAN MAY contain CID references to further UCANs as "proofs" (va
 ``` abnf
 ucan-header = "ucan:" 1*SP <ucan-assoc-list>
 ucan-assoc-list = <entry> *("," *SP <ucan-entry>) 
-ucan-entry = <cid> ":" <ucan-jwt>
+ucan-entry = <cid-header> ":" <ucan-jwt>
 ```
 
 Each entry in the UCAN-by-CID table MUST be presented as a tuple associating a CID with a JWT. This is called an "entry". A comma-separated list of one or more entries is called an "association list". The `cid` portion of each entry MUST be the CID for the following JWT. The CID MUST be given in the same format as provided in one of the other UCAN's proof `prf` field.
@@ -122,3 +123,12 @@ The body of the response MUST include a JSON object with a `prf` field. The valu
 Many thanks to the authors of [RFC 6750](https://www.rfc-editor.org/rfc/rfc6750.html) — Michael B. Jones and Dick Hardt — for their work in defining the bearer authorization method.
 
 Thank you to [Chris Joel](https://github.com/cdata) of [Subconscious](https://subconscious.substack.com/), and the [Bluesky](https://blueskyweb.xyz) and [Fission](https://fission.codes) teams for pioneering this format.
+
+<!-- External Links -->
+
+[Bluesky]: https://blueskyweb.xyz/
+[Brooklyn Zelenka]: https://github.com/expede
+[DAG House]: https://dag.house
+[Daniel Holmgren]: https://github.com/dholms
+[Fission]: https://fission.codes
+[Hugo Dias]: https://github.com/hugomrdias
