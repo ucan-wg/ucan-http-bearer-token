@@ -117,7 +117,13 @@ The body of the response MUST include a JSON object with a `prf` field. The valu
 { "prf": ["QmXiZ3sFXw811R8TrwaNeYvCF9Pv1nEmVpeEMEVpApzVhC", "bafkreidrgwjljxy6s7o5uvrifxnweffgi7chmye3pn6wyisv2n4b3uordi"] }
 ```
 
-# 4. Acknowledgments
+# 4 FAQ
+
+## 4.1 Why not provide the CIDs?
+
+By not including the CID in the header table, the recipient is forced to hash (and thus validate) the CIDs for each entry. If presented with a claimed CID as a table, implementers could ignore CID validation, breaking a core part of the proof chain security model.
+
+# 5 Acknowledgments
 
 Many thanks to the authors of [RFC 6750] — Michael B. Jones and Dick Hardt — for their work in defining the bearer authorization method.
 
