@@ -59,7 +59,7 @@ ucan-entry-point = "Authorization:" 1*SP "Bearer" 1*SP <ucan-jwt>
 
 ## 2.2 UCAN Proof Array
 
-The entry point UCAN MAY contain CID references to further UCANs as "proofs" (values in the `prf` field). For the entry point UCAN to be valid, these MUST also be valid and available. Since UCANs MAY be cached in previous requests, including UCAN mappings in this table is OPTIONAL. Only one `ucan` header SHOULD be used. If more than one `ucan` header is present, merging the elements from all headers on read is RECOMMENDED.
+The entry point UCAN MAY contain CID references to further UCANs as "proofs" (values in the `prf` field). For the entry point UCAN to be valid, these MUST also be valid and available. Since UCANs MAY be cached in previous requests, including UCAN mappings in this table is OPTIONAL. Only one `ucan` header SHOULD be used. More than one `ucan` header MUST NOT be used.
 
 ``` abnf
 ucan-header = "ucan:" 1*SP <ucan-assoc-list>
@@ -119,9 +119,13 @@ The body of the response MUST include a JSON object with a `prf` field. The valu
 
 # 4 FAQ
 
-## 4.1 Why not provide the CIDs?
+## 4.1 Why disallow duplicate headers?
 
-By not including the CID in the header table, the recipient is forced to hash (and thus validate) the CIDs for each entry. If presented with a claimed CID as a table, implementers could ignore CID validation, breaking a core part of the proof chain security model.
+Duplicate headers are not handled consistenly by all clients. Restricting to a single field is the simplest cross-client . 
+
+## 4.2 Why not include the UCAN CIDs?
+
+By not including the CID in the header table, the recipient is forced to hash (and thus validate) the CIDs for each entry. If presented with a claimed CID as a table, implementers could ignore CID validation, breaking a core part of the proof chain security model. Hash functions are very fast on a couple kilobytes of data (the limit of most browsers in 8KB). While this startegy may be abused to force more hashing, the overhead is still very low.
 
 # 5 Acknowledgments
 
@@ -144,6 +148,7 @@ Thank you to [Chris Joel] of [Subconscious], and the [Bluesky] and [Fission] tea
 [Fission]: https://fission.codes
 [Hugo Dias]: https://github.com/hugomrdias
 [JWT]: https://www.rfc-editor.org/rfc/rfc7519#section-3
+[Quinn Wilton]: https://github.com/QuinnWilton
 [RFC 6750]: https://www.rfc-editor.org/rfc/rfc6750.html
 [Subconscious]: https://subconscious.substack.com
 [UCAN]: https://github.com/ucan-wg/spec
