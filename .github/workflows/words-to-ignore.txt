@@ -1,5 +1,5 @@
-Bluesky
 BCP
+Bluesky
 CIDs
 Deduplicate
 Hardt
@@ -17,6 +17,7 @@ auth
 backend
 dholms
 expede
+implementers
 interpretable
 multiformat
 requestor's
