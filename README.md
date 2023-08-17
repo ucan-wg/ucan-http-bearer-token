@@ -121,7 +121,7 @@ The body of the response MUST include a JSON object with a `prf` field. The valu
 
 ## 4.1 Why disallow duplicate headers?
 
-Duplicate headers are not handled consistenly by all clients. Restricting to a single field is the simplest cross-client . 
+Duplicate headers are not handled consistenly by all clients. Restricting to a single field is the simplest cross-client solution to this, as long as the spec is followed.
 
 ## 4.2 Why not include the UCAN CIDs?
 
