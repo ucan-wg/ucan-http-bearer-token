@@ -62,7 +62,7 @@ ucan-entry-point = "Authorization:" 1*SP "Bearer" 1*SP <ucan-jwt>
 The entry point UCAN MAY contain CID references to further UCANs as "proofs" (values in the `prf` field). For the entry point UCAN to be valid, these MUST also be valid and available. Since UCANs MAY be cached in previous requests, including UCAN mappings in this table is OPTIONAL. Only one `ucan` header SHOULD be used. More than one `ucan` header MUST NOT be used.
 
 ``` abnf
-ucan-header = "ucan:" 1*SP <ucan-assoc-list>
+ucan-header = "ucan:" 1*SP <ucan-list>
 ucan-list = <ucan-jwt> *("," *SP <ucan-jwt>) 
 ```
 
