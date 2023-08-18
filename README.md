@@ -125,7 +125,7 @@ Duplicate headers are not handled consistently by all clients. Restricting to a 
 
 ## 4.2 Why not include the UCAN CIDs?
 
-Several attacks are possible if UCANs aren't validated. If CIDs aren't validated, at least two attacks are posisble: [privilege escelation] and [cache poisoning], as UCAN delegation proofs depends on a correct hash-linked structure. Many implementations cache a list of UCANs that they've already validated — avoiding cache poisoning is thus very important.
+Several attacks are possible if UCANs aren't validated. If CIDs aren't validated, at least two attacks are possible: [privilege escalation] and [cache poisoning], as UCAN delegation proofs depends on a correct hash-linked structure. Many implementations cache a list of UCANs that they've already validated — avoiding cache poisoning is thus very important.
 
 By not including the CID in the header table, the recipient is forced to hash (and thus validate) the CIDs for each entry. If presented with a claimed CID as a table, implementers could ignore CID validation, breaking a core part of the proof chain security model. Hash functions are very fast on a couple kilobytes of data (the limit of most browsers in 8KB). While this strategy may be abused to force more hashing, the overhead is still very low.
 
@@ -157,4 +157,4 @@ Thank you to [Chris Joel] of [Subconscious], and the [Bluesky] and [Fission] tea
 [Unix time]: https://en.wikipedia.org/wiki/Unix_time
 [`HTTP 510 Not Extended`]: https://datatracker.ietf.org/doc/html/rfc2774#section-7
 [cache poisoning]: https://en.wikipedia.org/wiki/Cache_poisoning
-[privilede escelation]: https://en.wikipedia.org/wiki/Privilege_escalation
+[privilede escalation]: https://en.wikipedia.org/wiki/Privilege_escalation
